@@ -24,12 +24,12 @@ async function run() {
 
 async function login() {
     console.log('start');
-    await chromeless
+    chromeless
         .goto(basePath + 'login/')
         .type(mail, '#txtLoginId')
         .type(pass, '#txtLoginPass')
         .click('#login_do')
-        .wait('#item_name')
+        .wait(5000)
 }
 async function input() {
     for (let index in dataJson) {
