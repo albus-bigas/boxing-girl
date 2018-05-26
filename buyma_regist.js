@@ -29,7 +29,7 @@ async function login() {
         .type(mail, '#txtLoginId')
         .type(pass, '#txtLoginPass')
         .click('#login_do')
-        .wait(3000)
+        .wait('#item_name')
 }
 async function input() {
     for (let index in dataJson) {
