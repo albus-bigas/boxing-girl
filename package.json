@@ -1,0 +1,10 @@
+{
+  "name": "chromeless",
+  "version": "1.0.0",
+  "description": "chromeless",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "chromeless": "^1.5.2"
+  }
+}
