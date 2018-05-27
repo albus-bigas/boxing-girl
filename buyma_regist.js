@@ -102,7 +102,7 @@ async function input() {
             // 買い付け地
             ele = document.querySelector('#rdoMyActArea2')
             ele.checked = true
-            ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea_primary][]"')
+            ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea_primary][]]"')
             ele.value = '2002000000'
             // ele.onchange()
             // setTimeout(()=>{
