@@ -13,7 +13,7 @@ async function run() {
 async function getData() {
     console.log('start')
     dataJson = await chromeless
-        .goto('https://item.taobao.com/item.htm?id=565039294076')
+        .goto('https://item.taobao.com/item.htm?id=570065152431')
         .wait('.tb-rmb-num')
         .evaluate((html2canvas) => {
             const data = {}
@@ -32,7 +32,38 @@ async function getData() {
                 if (AttributesArray[i].indexOf("颜色") != -1) {
                     data.color = AttributesArray[i]
                 }
+                if (AttributesArray[i].indexOf("领型") != -1) {
+                    data.NeckTipe = AttributesArray[i]
+                }
+                if (AttributesArray[i].indexOf("材质成分") != -1) {
+                    data.Material = AttributesArray[i]
+                }
+                if (AttributesArray[i].indexOf("对象") != -1) {
+                    data.Target = AttributesArray[i]
+                }
+                if (AttributesArray[i].indexOf("厚薄") != -1) {
+                    data.Thick = AttributesArray[i]
+                }
+                if (AttributesArray[i].indexOf("基础风格") != -1) {
+                    data.Style = AttributesArray[i]
+                }
+                if (AttributesArray[i].indexOf("版型:") != -1) {
+                    data.BodyStyle = AttributesArray[i]
+                }
+                if (AttributesArray[i].indexOf("款式版型") != -1) {
+                    data.BodyStyle2= AttributesArray[i]
+                }
             }
+            // for (let i = 0; i < AttributesArray.length; i++) {
+            //     if (AttributesArray[i].indexOf("对象") != -1) {
+            //         data.Target = AttributesArray[i]
+            //     }
+            // }
+            // for (let i = 0; i < AttributesArray.length; i++) {
+            //     if (AttributesArray[i].indexOf("对象") != -1) {
+            //         data.Target = AttributesArray[i]
+            //     }
+            // }
             return data;
         })
     console.log(dataJson)
