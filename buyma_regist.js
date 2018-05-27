@@ -1,7 +1,7 @@
 const {
     Chromeless
 } = require('chromeless')
-const dataJson = require(process.argv[2])
+const dataJson = require('./' + process.argv[2])
 const comment = require('./comment.json')
 
 const setting = require('./setting.json')
@@ -11,6 +11,11 @@ const basePath = 'https://www.buyma.com/';
 const imagePath = setting.imagePath;
 const mail = setting.mail;
 const pass = setting.pass;
+
+const date = new Date();
+const year = date.getFullYear();
+const month = date.getMonth() + 1;
+const lastDay = new Date(year, month, 0).getDate();
 
 let chromeless;
 
@@ -33,6 +38,7 @@ async function login() {
 }
 async function input() {
     for (let index in dataJson) {
+        dataJson[index].limit = year + '/' + month + '/' + lastDay;
         for (let i = 0; i < dataJson[index].image.length; i++) {
             dataJson[index].image[i] = imagePath + dataJson[index].image[i];
         }
@@ -72,6 +78,18 @@ async function input() {
         // TODO: サイズ
 
         // TODO: 配送方法
+        chromeless.click('.js-popup-shipping-method')
+            .wait('.shipping-method-popup-area')
+            .evaluate(() => {
+                let ele = document.querySelector('#shipping_method_select');
+                ele.value = 304;
+                ele = document.querySelector('.shipping_price');
+                ele.value = 2100;
+                ele = document.querySelector('#with-tracking');
+                ele.checked = true;
+                elm = document.querySelector('.js-commit-shipping-method');
+                ele.click();
+            })
 
         // 文字入力->登録
         chromeless.evaluate((json, comment) => {
@@ -86,24 +104,23 @@ async function input() {
             // TODO: キーワード追加
             ele = document.querySelector('#item_comment');
             ele.value = comment;
-            // TODO: 購入期限
-            // ele = document.querySelector('#itemedit_yukodate');
-            // ele.value = json.limit;
-            
+            // 購入期限
+            ele = document.querySelector('#itemedit_yukodate');
+            ele.value = json.limit;
+
             // シーズン
             ele = document.querySelector('#season')
-            if (json.season.indexOf('春') != -1 || json.season.indexOf('夏') != -1 ){
+            if (json.season.indexOf('春') != -1 || json.season.indexOf('夏') != -1) {
                 ele.value = '27'
-            }
-            else if (json.season.indexOf('秋') != -1 || json.season.indexOf('冬') != -1 ){
+            } else if (json.season.indexOf('秋') != -1 || json.season.indexOf('冬') != -1) {
                 ele.value = '28'
             }
 
-            // 買い付け地
-            ele = document.querySelector('#rdoMyActArea2')
-            ele.checked = true
-            ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea_primary][]"')
-            ele.value = '2002000000'
+            // TODO: 買い付け地 あとでやる
+            // ele = document.querySelector('#rdoMyActArea2')
+            // ele.checked = true
+            // ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea_primary][]"')
+            // ele.value = '2002000000'
             // ele.onchange()
             // setTimeout(()=>{
             //     ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea][]"]')
