@@ -1,5 +1,7 @@
-const { Chromeless } = require('chromeless')
-const html2canvas = require('html2canvas')
+const {
+    Chromeless
+} = require('chromeless')
+// const html2canvas = require('html2canvas')
 
 let chromeless;
 let dataJson;
@@ -15,7 +17,7 @@ async function getData() {
     dataJson = await chromeless
         .goto('https://item.taobao.com/item.htm?id=565039294076')
         .wait('.tb-rmb-num')
-        .evaluate((html2canvas) => {
+        .evaluate(() => {
             const data = {}
             const doc = document
             data.name = doc.querySelector('.tb-main-title').getAttribute('data-title');
@@ -33,13 +35,33 @@ async function getData() {
                     data.color = AttributesArray[i]
                 }
             }
+            const cdn = doc.createElement("script");
+            cdn.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js';
+            doc.body.appendChild(cdn);
+
+            const script = doc.createElement("script");
+            script.innerHTML = "function createImage(dom){\
+                html2canvas(dom, {\
+                    dpi: 144,\
+                    useCORS: true,\
+                    taintTest: false,\
+                    onrendered: function (canvas) {\
+                        var a = document.createElement('a');\
+                        a.href = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream');\
+                        a.download = 'somefilename.jpg';\
+                        a.click();\
+                    }});\
+            };"
+            doc.body.appendChild(script);
             return data;
         })
     console.log(dataJson)
 }
 async function screenshot() {
-    const photo = await chromeless.scrollToElement('#description').screenshot("#description")
-    console.log(photo)
+    await chromeless.evaluate(()=>{
+        const dom = document.querySelector('#description');
+        createImage(dom);
+    })
 }
 
 async function end() {
@@ -47,4 +69,4 @@ async function end() {
     console.log('end')
 }
 
-run().then(getData()).catch(console.error.bind(console))
+run().then(getData()).then(screenshot()).catch(console.error.bind(console))
