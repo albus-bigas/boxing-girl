@@ -1,21 +1,9 @@
-const { Chromeless } = require('chromeless')
-const html2canvas = require('html2canvas')
-
-let chromeless;
-let dataJson;
-
-async function run() {
-    chromeless = new Chromeless({
-        scrollBeforeClick: true,
-        implicitWait: true
-    })
-}
-async function getData() {
-    console.log('start')
-    dataJson = await chromeless
-        .goto('https://item.taobao.com/item.htm?id=570065152431')
+module.exports = async function TaobaoGetter(url, chromeless) {
+    console.log('taobao_getter start')
+    const dataJson = await chromeless
+        .goto(url)
         .wait('.tb-rmb-num')
-        .evaluate((html2canvas) => {
+        .evaluate(() => {
             const data = {}
             const doc = document
             data.name = doc.querySelector('.tb-main-title').getAttribute('data-title');
@@ -33,25 +21,25 @@ async function getData() {
                     data.color = AttributesArray[i]
                 }
                 if (AttributesArray[i].indexOf("领型") != -1) {
-                    data.NeckTipe = AttributesArray[i]
+                    data.neckTipe = AttributesArray[i]
                 }
                 if (AttributesArray[i].indexOf("材质成分") != -1) {
-                    data.Material = AttributesArray[i]
+                    data.material = AttributesArray[i]
                 }
                 if (AttributesArray[i].indexOf("对象") != -1) {
-                    data.Target = AttributesArray[i]
+                    data.target = AttributesArray[i]
                 }
                 if (AttributesArray[i].indexOf("厚薄") != -1) {
-                    data.Thick = AttributesArray[i]
+                    data.thick = AttributesArray[i]
                 }
                 if (AttributesArray[i].indexOf("基础风格") != -1) {
-                    data.Style = AttributesArray[i]
+                    data.style = AttributesArray[i]
                 }
                 if (AttributesArray[i].indexOf("版型:") != -1) {
-                    data.BodyStyle = AttributesArray[i]
+                    data.bodyStyle = AttributesArray[i]
                 }
                 if (AttributesArray[i].indexOf("款式版型") != -1) {
-                    data.BodyStyle2= AttributesArray[i]
+                    data.bodyStyle2 = AttributesArray[i]
                 }
             }
             // for (let i = 0; i < AttributesArray.length; i++) {
@@ -66,16 +54,5 @@ async function getData() {
             // }
             return data;
         })
-    console.log(dataJson)
+    return dataJson;
 }
-async function screenshot() {
-    const photo = await chromeless.scrollToElement('#description').screenshot("#description")
-    console.log(photo)
-}
-
-async function end() {
-    await chromeless.end()
-    console.log('end')
-}
-
-run().then(getData()).catch(console.error.bind(console))
