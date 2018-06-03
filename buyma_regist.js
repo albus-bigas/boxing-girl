@@ -1,7 +1,7 @@
 const {
     Chromeless
 } = require('chromeless')
-const dataJson = require(process.argv[2])
+const dataJson = require('./' + process.argv[2])
 const comment = require('./comment.json')
 
 const setting = require('./setting.json')
