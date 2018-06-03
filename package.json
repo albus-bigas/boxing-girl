@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "chromeless": "^1.5.2"
+    "chromeless": "^1.5.2",
+    "html2canvas": "^1.0.0-alpha.12"
   }
 }

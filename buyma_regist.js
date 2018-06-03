@@ -39,7 +39,7 @@ async function login() {
         .type(mail, '#txtLoginId')
         .type(pass, '#txtLoginPass')
         .click('#login_do')
-        .wait(3000)
+        .wait(5000)
 }
 // MARK: input
 async function input() {
