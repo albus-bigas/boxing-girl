@@ -1,0 +1,103 @@
+https://www.buyma.com/my/itemedit/create/
+
+POST /my/itemedit/create/ HTTP/1.1
+Host: www.buyma.com
+Connection: keep-alive
+Content-Length: 4059
+Cache-Control: max-age=0
+Origin: https://www.buyma.com
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: https://www.buyma.com/my/itemedit/confirm/?itemedit%5Bunq%5D=7dce8bc1e38591ee5ced75a89a6ffbab39a16261cef0b6156839f6ae3ab11df1b964dcb95dd14b8d99439973e2ccfb76743dfae0b8b9f26312476c1b1113a961
+Accept-Encoding: gzip, deflate, br
+Accept-Language: ja,en-US;q=0.9,en;q=0.8,pt;q=0.7
+Cookie: _bom4g50s_7=ZjQ1ZWZhZjAzNzk0YTFiZDNkZDQ3MjEwODM4MmYxMmE4MzI5MTM1M2UyNTBk%0ANTA3MWFiY2U2M2UwMWE2Yjc5NQ%3D%3D%0A; app_banner_version=1507791600; app_launch_banner_version=1499763600; _gWy89cor_3=MjAxOC8wNS8xNiAyMjozMDowMg%3D%3D; _nRv3Hphs_4=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvLmpwLw%3D%3D; _w_sqd90kU0982a741_8=ZmFsc2U%3D; _ga=GA1.2.1226109672.1526477401; newregcp1802_=1; _ipao_fc=1; _a1_f=9dc9880e-c3d2-417a-bfa9-0020e8caf4ee; _a1_u=38bef679-e1af-47ed-8ef3-06e7ecc9db86; cto_lwid=bbd05b2b-f76b-4f5d-965b-97e03be5caf7; _bm-top-cateid=1001; dvssfouubc=b; buyeritems_page_row_count=20; irepCartItems=%5B%5D; cto_idcpy=8d168299-bff1-4456-b191-ce2ad869e8e2; vs.bid=gNQ4zwjaoq75jAzZnEKFapw.j06knm0i; lru=HTUq%2FIuwADrB8vnAA4POy37%2BCBaufQtNtH0ceIhkibdB4E4Us%2B09gA%3D%3D; _bTcSnK2z_1=Mjc%3D%0A; _gid=GA1.2.662185920.1527932983; sell_bulk_accessible_user=0; card_issuable=1; bm_fwsw=2; xLeEnupuY11Od7qj7DPcs0UJ=b49c4b2f4886d893293e45cad1eb335a9fba1d1abc9f6535387c450796813587; aomap_gap=1; root_redirection=%2Fmens%2F; ses=f2ee16398591e572a172beea9370899a; _GEWZxdbe2H2bte4N=M2Y5MTlmNGYyMzJkZmM1YjcxYWExMzY1NThkMzEzM2E1OGRjMWNmNGUzMmMxNzM0NTI0YTk1MmIwZmZlYzg0Yw%3D%3D; _4qtJgvsYhkQO9t8W=09317695e1cb87007d3a4960e38af857ebbba8b36c4f234da17ecd70d62e8c1d; _ak3lsdf981lSdf1ldkia1e=eyJsYXN0X2xvZ2luX3RpbWUiOiIyMDE4MDYwMjE4NTQzNiIsInRva2VuIjoiNDZjYmY1MjFlZjgyYWU5M2UwYTM0ZjVhZTg2MzQ1NzRlOGExNmQ5YSJ9; bm_cart=8ad43c9e22465e5945226b7e9fd8be36; _DBOngl29f311ALR78vy7WVXn=; invmod=1; _haYwNOv9KAjMwqN4rZXF48H0=eyJsYXN0X2FjY2Vzc190aW1lIjoiMjAxODA2MDIxOTE4MjUiLCJ0b2tlbiI6%0AIjc3N2JkZTJkZGQ1NDI1NDBmZjUxNzA3MjhjZWU3YzYyMDI3OTljZTIifQ%3D%3D%0A; _9UoYx0yr_2=MjAxOC8wNi8wMiAxOToxODoyNQ%3D%3D%0A; _tpZxzksYC2pJSKSm7YpkaE24=%7B%22kaiin_id%22%3A5922380%2C%22nickname%22%3A%22albasimia%22%2C%22hashed_mailaddr%22%3A%22709f68828db4d80e68743da83435ea1b%22%2C%22point%22%3A0%2C%22point_back_rate%22%3A0%2C%22stage_id%22%3A0%2C%22stage_name%22%3Anull%2C%22date_of_continuation%22%3Anull%2C%22amount_of_continuation%22%3Anull%2C%22mail_certificate_status%22%3A1%2C%22is_buyer%22%3Atrue%2C%22buyer_kbn%22%3A%220%22%2C%22buyer_app%22%3A%220%22%2C%22is_exhibition_prohibited%22%3Afalse%2C%22is_on_blacklist%22%3Afalse%2C%22accepts_item_relation%22%3Atrue%2C%22denys_item_relation%22%3Afalse%2C%22is_domestic%22%3Atrue%2C%22invitation_code%22%3A%22nuuOsuE832g%22%2C%22gender%22%3A%22Male%22%2C%22age%22%3A27%2C%22is_nps_promoter%22%3Afalse%2C%22is_line_user%22%3Afalse%2C%22is_event_user%22%3Afalse%2C%22is_unpurchased_user%22%3Atrue%2C%22cart_status%22%3A%7B%22buy_cart_count%22%3A0%7D%2C%22menu_status%22%3A%7B%22buyer_orders%22%3A0%2C%22buyorders%22%3A0%2C%22new_buyer_orders%22%3A0%7D%2C%22buyorder_status%22%3A%7B%22received_count%22%3A0%7D%2C%22last_saved%22%3A1527934706109%2C%22api_version%22%3A2.4%7D
+
+utf8=%E2%9C%93&authenticity_token=tSxpH91wHevnE%2F4638GbIaaasibxuriSZ15sqVRe75s%3D&utf8=%E2%9C%93&authenticity_token=tSxpH91wHevnE%2F4638GbIaaasibxuriSZ15sqVRe75s%3D&itemedit%5Bitem_images_attributes%5D%5B0%5D%5Bid%5D=&itemedit%5Bitem_images_attributes%5D%5B0%5D%5Bimage_key%5D=aElKeE1LSkFmN0JsNXlMbDJXa0V5dz09LS1tVzd4UU9qQlFUa2IxZWVBTXJ5RUhnPT0%3D--0868c891ba0f4ebba36eb75bd2ef3ae597be226b&itemedit%5Bitem_images_attributes%5D%5B0%5D%5Bimage_index%5D=1&itemedit%5Bitem_images_attributes%5D%5B0%5D%5B_destroy%5D=false&itemedit%5Bitem_images_attributes%5D%5B0%5D%5Bposition%5D=1&itemedit%5Bitem_images_attributes%5D%5B0%5D%5Bpreview_url%5D=https%3A%2F%2Fwww.buyma.com%2Frorapi%2Fimage_preview%2Fimgdata%2Fitem%2FaElKeE1LSkFmN0Js%2F100_1.jpg%3F1527934691894&itemedit%5Bbuyer_id%5D=&itemedit%5Bunq%5D=7dce8bc1e38591ee5ced75a89a6ffbab39a16261cef0b6156839f6ae3ab11df1b964dcb95dd14b8d99439973e2ccfb76743dfae0b8b9f26312476c1b1113a961&itemedit%5Bmodel_id%5D=&itemedit%5Bsyo_name%5D=%E5%95%86%E5%93%81%E5%90%8D&itemedit%5Bcolorsize%5D=%E3%82%B5%E3%82%A4%E3%82%BA%E8%A3%9C%E8%B6%B3&itemedit%5Bcomment%5D=%E5%95%86%E5%93%81%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88&itemedit%5Bstyle_numbers%5D%5B%5D=&itemedit%5Bidentification_memos%5D%5B%5D=&itemedit%5Bmsg_to_buyer_flg%5D=1&itemedit%5Bseason_id%5D=27&itemedit%5Bprice%5D=1000&itemedit%5Breference_price_kbn%5D=0&itemedit%5Breference_price%5D=&itemedit%5Bpayment%5D=1&itemedit%5Byukosu%5D=2&itemedit%5Byukodate%5D=2018%2F06%2F16&itemedit%5Bpurchase_area_over_sea%5D%5B%5D=2002016000&itemedit%5Bpurchase_area_kbn%5D=2&itemedit%5Bpurchase_area_japan%5D%5B%5D=1000001000&itemedit%5Bkonyuchi%5D=&itemedit%5Bshipping_region_over_sea%5D%5B%5D=2002016000&itemedit%5Bshipping_region_kbn%5D=2&itemedit%5Bshipping_region_japan%5D%5B%5D=1000001000&itemedit%5Btanka%5D=&itemedit%5Bdelivery_fee_a%5D=&itemedit%5Bdelivery_method_a%5D=&itemedit%5Bother_delivery_method_a%5D=&itemedit%5Bwith_tracking_a%5D=&itemedit%5Barrival_exptd_date_a_from%5D=&itemedit%5Barrival_exptd_date_a_to%5D=&itemedit%5Bprice_B%5D=&itemedit%5Bhasso_B%5D=&itemedit%5Bdelivery_method_b%5D=&itemedit%5Bother_delivery_method_b%5D=&itemedit%5Bwith_tracking_b%5D=&itemedit%5Barrival_exptd_date_b_from%5D=&itemedit%5Barrival_exptd_date_b_to%5D=&itemedit%5Bsoryo_meyasu_price_a_from%5D=&itemedit%5Bsoryo_meyasu_price_a_to%5D=&itemedit%5Bsoryo_meyasu_price_b_from%5D=&itemedit%5Bsoryo_meyasu_price_b_to%5D=&itemedit%5Bduty_flg%5D=1&itemedit%5Bduty_type%5D=1&itemedit%5Bsyo_id%5D=&itemedit%5Bsyupinflg%5D=&itemedit%5BhdnBtnKind%5D=1&itemedit%5BhdnCateid%5D=3260&itemedit%5BhdnCateName%5D=%E3%83%A1%E3%83%B3%E3%82%BA%E3%83%95%E3%82%A1%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3+%3E+%E3%83%88%E3%83%83%E3%83%97%E3%82%B9+%3E+T%E3%82%B7%E3%83%A3%E3%83%84%E3%83%BB%E3%82%AB%E3%83%83%E3%83%88%E3%82%BD%E3%83%BC&itemedit%5BhdnThmid%5D=0&itemedit%5BhdnThmName%5D=%E6%8C%87%E5%AE%9A%E3%81%AA%E3%81%97&itemedit%5BhdnBrandid%5D=0&itemedit%5BhdnBrandName%5D=%E6%8C%87%E5%AE%9A%E3%81%AA%E3%81%97&itemedit%5BhdnTagIds%5D=419&itemedit%5BhdnTagNames%5D=%E6%97%A5%E6%9C%AC%E6%9C%AA%E5%85%A5%E8%8D%B7&itemedit%5BhdnSearchColorId%5D=&itemedit%5BhdnSearchColorName%5D=&itemedit%5BhdnSearchEnglishColorName%5D=&itemedit%5BhdnSearchSizeId%5D=&itemedit%5BhdnSearchSizeName%5D=&itemedit%5Bitem_colorsize_fallback_flg%5D=&itemedit%5Bshipping_method_fallback_flg%5D=&itemedit%5BhdnSpecColors%5D=&itemedit%5BhdnSpecSizes%5D=&itemedit%5BhdnColorSizes%5D=&itemedit%5BhdnSizeDetails%5D=1_1_1.1%2C1_2_1.2%2C1_3_1.3%2C1_4_1.4%2C2_1_2.1%2C2_2_2.2%2C2_3_2.3%2C2_4_2.4%2C3_1_3.1%2C3_2_3.2%2C3_3_3.3%2C3_4_3.4%2C4_1_4.1%2C4_2_4.2%2C4_3_4.3%2C4_4_4.4%2C5_1_5.1%2C5_2_5.2%2C5_3_5.3%2C5_4_5.4&itemedit%5BhdnSizeUnitId%5D=&itemedit%5BhdnSizeUnitName%5D=&itemedit%5BhdnShippingMethodIds%5D=367879&itemedit%5Binsdate%5D=&itemedit%5Bsyo_id%5D=&itemedit%5BhdnEditKind%5D=1&itemedit%5BhdnColorSizeFormatKbn%5D=0&itemedit%5BhdnUpdNumber%5D=&itemedit%5Bunq%5D=7dce8bc1e38591ee5ced75a89a6ffbab39a16261cef0b6156839f6ae3ab11df1b964dcb95dd14b8d99439973e2ccfb76743dfae0b8b9f26312476c1b1113a961&itemedit%5Bconfirm%5D=&syupinyukodate=
+
+utf8: ✓
+authenticity_token: tSxpH91wHevnE/4638GbIaaasibxuriSZ15sqVRe75s=
+itemedit[item_images_attributes][0][id]: 
+itemedit[item_images_attributes][0][image_key]: aElKeE1LSkFmN0JsNXlMbDJXa0V5dz09LS1tVzd4UU9qQlFUa2IxZWVBTXJ5RUhnPT0=--0868c891ba0f4ebba36eb75bd2ef3ae597be226b
+itemedit[item_images_attributes][0][image_index]: 1
+itemedit[item_images_attributes][0][_destroy]: false
+itemedit[item_images_attributes][0][position]: 1
+itemedit[item_images_attributes][0][preview_url]: https://www.buyma.com/rorapi/image_preview/imgdata/item/aElKeE1LSkFmN0Js/100_1.jpg?1527934691894
+itemedit[buyer_id]: 
+itemedit[unq]: 7dce8bc1e38591ee5ced75a89a6ffbab39a16261cef0b6156839f6ae3ab11df1b964dcb95dd14b8d99439973e2ccfb76743dfae0b8b9f26312476c1b1113a961
+itemedit[model_id]: 
+itemedit[syo_name]: 商品名
+itemedit[colorsize]: サイズ補足
+itemedit[comment]: 商品コメント
+itemedit[style_numbers][]: 
+itemedit[identification_memos][]: 
+itemedit[msg_to_buyer_flg]: 1
+itemedit[season_id]: 27
+itemedit[price]: 1000
+itemedit[reference_price_kbn]: 0
+itemedit[reference_price]: 
+itemedit[payment]: 1
+itemedit[yukosu]: 2
+itemedit[yukodate]: 2018/06/16
+itemedit[purchase_area_over_sea][]: 2002016000
+itemedit[purchase_area_kbn]: 2
+itemedit[purchase_area_japan][]: 1000001000
+itemedit[konyuchi]: 
+itemedit[shipping_region_over_sea][]: 2002016000
+itemedit[shipping_region_kbn]: 2
+itemedit[shipping_region_japan][]: 1000001000
+itemedit[tanka]: 
+itemedit[delivery_fee_a]: 
+itemedit[delivery_method_a]: 
+itemedit[other_delivery_method_a]: 
+itemedit[with_tracking_a]: 
+itemedit[arrival_exptd_date_a_from]: 
+itemedit[arrival_exptd_date_a_to]: 
+itemedit[price_B]: 
+itemedit[hasso_B]: 
+itemedit[delivery_method_b]: 
+itemedit[other_delivery_method_b]: 
+itemedit[with_tracking_b]: 
+itemedit[arrival_exptd_date_b_from]: 
+itemedit[arrival_exptd_date_b_to]: 
+itemedit[soryo_meyasu_price_a_from]: 
+itemedit[soryo_meyasu_price_a_to]: 
+itemedit[soryo_meyasu_price_b_from]: 
+itemedit[soryo_meyasu_price_b_to]: 
+itemedit[duty_flg]: 1
+itemedit[duty_type]: 1
+itemedit[syo_id]: 
+itemedit[syupinflg]: 
+itemedit[hdnBtnKind]: 1
+itemedit[hdnCateid]: 3260
+itemedit[hdnCateName]: メンズファッション > トップス > Tシャツ・カットソー
+itemedit[hdnThmid]: 0
+itemedit[hdnThmName]: 指定なし
+itemedit[hdnBrandid]: 0
+itemedit[hdnBrandName]: 指定なし
+itemedit[hdnTagIds]: 419
+itemedit[hdnTagNames]: 日本未入荷
+itemedit[hdnSearchColorId]: 
+itemedit[hdnSearchColorName]: 
+itemedit[hdnSearchEnglishColorName]: 
+itemedit[hdnSearchSizeId]: 
+itemedit[hdnSearchSizeName]: 
+itemedit[item_colorsize_fallback_flg]: 
+itemedit[shipping_method_fallback_flg]: 
+itemedit[hdnSpecColors]: 
+itemedit[hdnSpecSizes]: 
+itemedit[hdnColorSizes]: 
+itemedit[hdnSizeDetails]: 1_1_1.1,1_2_1.2,1_3_1.3,1_4_1.4,2_1_2.1,2_2_2.2,2_3_2.3,2_4_2.4,3_1_3.1,3_2_3.2,3_3_3.3,3_4_3.4,4_1_4.1,4_2_4.2,4_3_4.3,4_4_4.4,5_1_5.1,5_2_5.2,5_3_5.3,5_4_5.4
+itemedit[hdnSizeUnitId]: 
+itemedit[hdnSizeUnitName]: 
+itemedit[hdnShippingMethodIds]: 367879
+itemedit[insdate]: 
+itemedit[syo_id]: 
+itemedit[hdnEditKind]: 1
+itemedit[hdnColorSizeFormatKbn]: 0
+itemedit[hdnUpdNumber]: 
+itemedit[unq]: 7dce8bc1e38591ee5ced75a89a6ffbab39a16261cef0b6156839f6ae3ab11df1b964dcb95dd14b8d99439973e2ccfb76743dfae0b8b9f26312476c1b1113a961
+itemedit[confirm]: 
+syupinyukodate: 

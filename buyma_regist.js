@@ -5,8 +5,6 @@ const setting = require('./' + process.argv[2])
 const dataJson = require('./' + process.argv[3])
 const comment = require('./comment.json')
 
-
-
 const basePath = 'https://www.buyma.com/';
 const imagePath = setting.imagePath;
 const mail = setting.mail;
@@ -16,6 +14,11 @@ const date = new Date();
 const year = date.getFullYear();
 const month = date.getMonth() + 1;
 const lastDay = new Date(year, month, 0).getDate();
+
+//TODO: ユニセックス対応
+//TODO: 靴、アクセサリー等対応
+//TODO: エラー処理
+//TODO: slack通知
 
 let chromeless = new Chromeless({
     scrollBeforeClick: true,
@@ -52,11 +55,12 @@ async function input() {
         await chromeless.goto(basePath + 'my/itemedit/?tab=b')
 
         await setCategoly(data)
-        await setImage(data)
+        // await setImage(data)
         await setColor(data)
         await setSize(data)
-        await setTag(data)
-        await setText(data, index)
+        // await setTag(data)
+        // await setText(data, index)
+        // await submit(data)
     }
 }
 
@@ -102,7 +106,7 @@ async function setImage(data) {
         .wait(3000)
 }
 
-// TODO: カラー選択
+// MARK: カラー選択
 async function setColor(data) {
     await console.log('setColor')
     await chromeless.click('.js-popup-color-size')
@@ -119,7 +123,6 @@ async function setColor(data) {
                 }
             }, data, data.color[i])
             await chromeless.type(data.colorName[i], '.js-color-size-color-name')
-                // .click('.js-add-color')
                 .evaluate(() => {
                     const colorAddBtn = document.querySelector('.js-add-color')
                     colorAddBtn.click();
@@ -129,11 +132,41 @@ async function setColor(data) {
 }
 
 // MARK: サイズ選択
+// TODO: 日本参考サイズ入力
 async function setSize(data) {
     await console.log('setSize')
     await (async function () {
         for (let i = 0; i < data.size.length; i++) {
-            await chromeless.type(data.size[i], `[data-id="${i+1}"] .js-size-text`)
+            await chromeless.type(data.size[i], `[data-id="${i + 1}"] .js-size-text`)
+            //     .click(`[data-id="${i + 1}"] select`)
+            // if (data.size[i] == 'S') {
+            //     await chromeless.press(40, 1)
+            // } else if (data.size[i] == 'M') {
+            //     await chromeless.press(40, 2)
+            // } else if (data.size[i] == 'L') {
+            //     await chromeless.press(40, 3)
+            // } else if (data.size[i].indexOf('L') > 0) {
+            //     await chromeless.press(40, 4)
+            // }
+            // await chromeless.press(13)
+            // await chromeless.type('\r')
+            
+            .evaluate((size, i) => {
+                const japanSize = document.querySelector(`[data-id="${i + 1}"] select`)
+                if (size == 'S') {
+                    japanSize.children[1].selected = true;
+                    japanSize.value = 2;
+                } else if (size == 'M') {
+                    japanSize.children[2].selected = true;
+                    japanSize.value = 3;
+                } else if (size == 'L') {
+                    japanSize.children[3].selected = true;
+                    japanSize.value = 4;
+                } else if (size.indexOf('L') >= 0) {
+                    japanSize.children[4].selected = true;
+                    japanSize.value = 5;
+                }
+            }, data.size[i], i)
             if (i + 1 < data.size.length) {
                 await chromeless.evaluate(() => {
                     const addSizeBtn = document.querySelector('.js-add-size')
@@ -145,18 +178,20 @@ async function setSize(data) {
     await chromeless.evaluate(() => {
         const popup = document.querySelector('.js-color-size-popup-box')
         const submitBtn = popup.querySelectorAll('.fab-button--primary')[2];
-        submitBtn.click();
+        // submitBtn.click();
     })
 }
 
+// TODO: サイズ詳細
+
 // MARK: タグ選択
+// TODO: 有名人、雑誌ランダム選択
 async function setTag(data) {
     await console.log('setTag')
-    await chromeless.evaluate(()=>{
+    await chromeless.evaluate(() => {
         const btn = document.querySelector('.itemedit-tag__btn')
         btn.click()
     })
-    // .click('.itemedit-tag__btn')
     await chromeless.wait('.r_tag_select_box_content')
         .evaluate((tag) => {
             const doms = document.querySelectorAll('.m_tag_title');
@@ -208,25 +243,7 @@ async function setText(data, index) {
         } else if (json.season.indexOf('秋') != -1 || json.season.indexOf('冬') != -1) {
             ele.value = '28'
         }
-
-        // TODO: 買い付け地 保留
-        // ele = document.querySelector('#rdoMyActArea2')
-        // ele.checked = true
-        // ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea_primary][]"')
-        // ele.value = '2002000000'
-        // ele.onchange()
-        // setTimeout(()=>{
-        //     ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea][]"]')
-        //     ele.value = '2002003000'
-        // },5000)
-
-        // TODO: 出品と下書き分岐
-        // ele = document.querySelector('#draftButton');
-        // ele.click();
     }, data, comment.comment, index)
-
-    // MARK: 登録完了画面待機
-    // await chromeless.wait('.fab-design-mg--tb20')
 }
 
 // TODO: 配送方法 保留
@@ -243,6 +260,35 @@ async function setShipping() {
             elm = document.querySelector('.js-commit-shipping-method');
             ele.click();
         })
+}
+
+// TODO: 買い付け地 保留
+async function setlocation() {
+    await chromeless.evaluate(() => {
+        ele = document.querySelector('#rdoMyActArea2')
+        ele.checked = true
+        ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea_primary][]"')
+        ele.value = '2002000000'
+        ele.onchange()
+        setTimeout(() => {
+            ele = document.querySelector('#itemedit_purchase_area[name="itemedit[purchase_area_over_sea][]"]')
+            ele.value = '2002003000'
+        }, 5000)
+    })
+}
+
+// MARK: 確定
+// TODO: 出品と下書き分岐
+async function submit(data) {
+    await (async function () {
+        if (data.draft) {
+            await chromeless.evaluate(() => {
+                ele = document.querySelector('#draftButton');
+                ele.click();
+            })
+            await chromeless.wait('.fab-design-mg--tb20')
+        }
+    })()
 }
 
 // MARK: 終了
