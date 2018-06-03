@@ -1,6 +1,8 @@
 const {
     Chromeless
 } = require('chromeless')
+const fs = require('fs')
+
 const setting = require('./' + process.argv[2])
 const dataJson = require('./' + process.argv[3])
 const comment = require('./comment.json')
@@ -32,6 +34,7 @@ async function run() {
     await end();
 }
 
+// MARK: login()
 async function login() {
     await console.log('login')
     await chromeless
@@ -41,36 +44,61 @@ async function login() {
         .click('#login_do')
         .wait(5000)
 }
-// MARK: input
+// MARK: input()
 async function input() {
     for (let index in dataJson) {
-        dataJson[index].limit = year + '/' + month + '/' + lastDay;
-        for (let i = 0; i < dataJson[index].image.length; i++) {
-            dataJson[index].image[i] = imagePath + dataJson[index].image[i];
-        }
+        const data = dataJson[index];
+
         // TODO: 色変換システム
-        const data = dataJson[index]
 
         // 出品ページへ
         await chromeless.goto(basePath + 'my/itemedit/?tab=b')
 
+        await setData(data)
         await setCategoly(data)
-        // await setImage(data)
-        await setColor(data)
-        await setSize(data)
-        // await setTag(data)
-        // await setText(data, index)
-        // await submit(data)
+        await setImage(data)
+        // await setColor(data)
+        // await setSize(data)
+        await setTag(data)
+        await setText(data, index)
+        await submit(data)
     }
 }
 
-// MARK: 過去の出品からコピー、カテゴリ選択
+// MARK: setData() データ整形
+async function setData(data) {
+    console.log('setData')
+    data.limit = year + '/' + month + '/' + lastDay;
+    // data.image = await fs.readdir(imagePath + data.id, function (err, files) {
+    //     if (err) {
+    //         throw err;
+    //     } else {
+    //         for (let i = 0; i < files.length; i++) {
+    //             if (files[i] == '.DS_Store') files.splice(i, 1);
+    //             else {
+    //                 files[i] = imagePath + data.id + '/' + files[i];
+    //                 console.log(files[i])
+    //             }
+    //         }
+    //         return files;
+    //     }
+    // })
+    data.image = fs.readdirSync(imagePath + data.id)
+    for (let i = 0; i < data.image.length; i++) {
+        if (data.image[i] == '.DS_Store') data.image.splice(i, 1);
+    }
+    for (let i = 0; i < data.image.length; i++) {
+        data.image[i] = imagePath + data.id + '/' + data.image[i];
+    }
+}
+
+// MARK: setCategoly() 過去の出品からコピー、カテゴリ選択
 async function setCategoly(data) {
     await console.log('setCategoly')
     await chromeless.wait('.js-duty-edit-type')
         .click('.itemedit-copy-btn')
         .wait('#formmain_select')
-        .click(`input[onclick="$('#rdoitems').val('36354335')"]`)
+        .click(`input[onclick="$('#rdoitems').val('36421853')"]`)
         .wait('.js-duty-edit-type')
         .click('.popup_category')
         .wait('.cate_link')
@@ -96,8 +124,9 @@ async function setCategoly(data) {
         }, data)
 }
 
-// MARK: ブランド選択->画像選択
+// MARK: setImage() ブランド選択->画像選択
 async function setImage(data) {
+    await console.log('setimage', data.image)
     await console.log('setImage')
     await chromeless.click('.popup_brand')
         .wait('#brand_popup_tab')
@@ -106,7 +135,7 @@ async function setImage(data) {
         .wait(3000)
 }
 
-// MARK: カラー選択
+// MARK: setColor() カラー選択
 async function setColor(data) {
     await console.log('setColor')
     await chromeless.click('.js-popup-color-size')
@@ -127,46 +156,53 @@ async function setColor(data) {
                     const colorAddBtn = document.querySelector('.js-add-color')
                     colorAddBtn.click();
                 })
+
+            // TODO: 後で消す
+            await chromeless.evaluate(() => {
+                const popup = document.querySelector('.js-color-size-popup-box')
+                const submitBtn = popup.querySelectorAll('.fab-button--primary')[2];
+                submitBtn.click();
+            })
         }
     })()
 }
 
-// MARK: サイズ選択
+// MARK: setSize() サイズ選択
 // TODO: 日本参考サイズ入力
 async function setSize(data) {
     await console.log('setSize')
     await (async function () {
         for (let i = 0; i < data.size.length; i++) {
             await chromeless.type(data.size[i], `[data-id="${i + 1}"] .js-size-text`)
-            //     .click(`[data-id="${i + 1}"] select`)
-            // if (data.size[i] == 'S') {
-            //     await chromeless.press(40, 1)
-            // } else if (data.size[i] == 'M') {
-            //     await chromeless.press(40, 2)
-            // } else if (data.size[i] == 'L') {
-            //     await chromeless.press(40, 3)
-            // } else if (data.size[i].indexOf('L') > 0) {
-            //     await chromeless.press(40, 4)
-            // }
-            // await chromeless.press(13)
-            // await chromeless.type('\r')
-            
-            .evaluate((size, i) => {
-                const japanSize = document.querySelector(`[data-id="${i + 1}"] select`)
-                if (size == 'S') {
-                    japanSize.children[1].selected = true;
-                    japanSize.value = 2;
-                } else if (size == 'M') {
-                    japanSize.children[2].selected = true;
-                    japanSize.value = 3;
-                } else if (size == 'L') {
-                    japanSize.children[3].selected = true;
-                    japanSize.value = 4;
-                } else if (size.indexOf('L') >= 0) {
-                    japanSize.children[4].selected = true;
-                    japanSize.value = 5;
-                }
-            }, data.size[i], i)
+                //     .click(`[data-id="${i + 1}"] select`)
+                // if (data.size[i] == 'S') {
+                //     await chromeless.press(40, 1)
+                // } else if (data.size[i] == 'M') {
+                //     await chromeless.press(40, 2)
+                // } else if (data.size[i] == 'L') {
+                //     await chromeless.press(40, 3)
+                // } else if (data.size[i].indexOf('L') > 0) {
+                //     await chromeless.press(40, 4)
+                // }
+                // await chromeless.press(13)
+                // await chromeless.type('\r')
+
+                .evaluate((size, i) => {
+                    const japanSize = document.querySelector(`[data-id="${i + 1}"] select`)
+                    if (size == 'S') {
+                        japanSize.children[1].selected = true;
+                        japanSize.value = 2;
+                    } else if (size == 'M') {
+                        japanSize.children[2].selected = true;
+                        japanSize.value = 3;
+                    } else if (size == 'L') {
+                        japanSize.children[3].selected = true;
+                        japanSize.value = 4;
+                    } else if (size.indexOf('L') >= 0) {
+                        japanSize.children[4].selected = true;
+                        japanSize.value = 5;
+                    }
+                }, data.size[i], i)
             if (i + 1 < data.size.length) {
                 await chromeless.evaluate(() => {
                     const addSizeBtn = document.querySelector('.js-add-size')
@@ -178,13 +214,13 @@ async function setSize(data) {
     await chromeless.evaluate(() => {
         const popup = document.querySelector('.js-color-size-popup-box')
         const submitBtn = popup.querySelectorAll('.fab-button--primary')[2];
-        // submitBtn.click();
+        submitBtn.click();
     })
 }
 
 // TODO: サイズ詳細
 
-// MARK: タグ選択
+// MARK: setTag() タグ選択
 // TODO: 有名人、雑誌ランダム選択
 async function setTag(data) {
     await console.log('setTag')
@@ -209,7 +245,7 @@ async function setTag(data) {
         }, data.tag)
 }
 
-// MARK: 文字入力->登録
+// MARK: setText() 文字入力->登録
 async function setText(data, index) {
     await console.log('setText')
     await chromeless.evaluate((json, comment, index) => {
@@ -218,10 +254,14 @@ async function setText(data, index) {
         for (var i = 0; i < json.keyword.length; i++) {
             title = title + " " + json.keyword[i];
         }
-        title = title + " " + index;
+        title = title + " " + json.id;
         ele.value = title;
         ele = document.querySelector('#price');
-        ele.value = json.price;
+        if (json.price2) {
+            ele.value = json.price2;
+        } else if (json.price1) {
+            ele.value = json.price1;
+        }
         ele = document.querySelector('#pieces');
         ele.value = 2;
         ele = document.querySelector('#item_color_size');
@@ -246,7 +286,7 @@ async function setText(data, index) {
     }, data, comment.comment, index)
 }
 
-// TODO: 配送方法 保留
+// TODO: setShipping() 配送方法 保留
 async function setShipping() {
     await chromeless.click('.js-popup-shipping-method')
         .wait('.shipping-method-popup-area')
@@ -262,8 +302,8 @@ async function setShipping() {
         })
 }
 
-// TODO: 買い付け地 保留
-async function setlocation() {
+// TODO: setLocation() 買い付け地 保留
+async function setLocation() {
     await chromeless.evaluate(() => {
         ele = document.querySelector('#rdoMyActArea2')
         ele.checked = true
@@ -277,7 +317,7 @@ async function setlocation() {
     })
 }
 
-// MARK: 確定
+// MARK: submit() 確定
 // TODO: 出品と下書き分岐
 async function submit(data) {
     await (async function () {
@@ -291,7 +331,7 @@ async function submit(data) {
     })()
 }
 
-// MARK: 終了
+// MARK: end() 終了
 async function end() {
     // await chromeless.end()
     await console.log('end')

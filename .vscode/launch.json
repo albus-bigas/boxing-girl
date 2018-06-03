@@ -12,7 +12,7 @@
             "program": "${workspaceFolder}/buyma_regist.js",
             "args": [
                 "fukada.json",
-                "test.json"
+                "yuto_dist.json"
             ]
         }
     ]

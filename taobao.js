@@ -1,12 +1,25 @@
-module.exports = async function TaobaoGetter(url, chromeless) {
+module.exports = async function TaobaoGetter(json, chromeless) {
     console.log('taobao_getter start')
     const dataJson = await chromeless
-        .goto(url)
+        .goto(json["リンク"])
         .wait('.tb-rmb-num')
-        .evaluate(() => {
+        .evaluate((json) => {
             const data = {}
             const doc = document
-            data.name = doc.querySelector('.tb-main-title').getAttribute('data-title');
+            data.defaultName = doc.querySelector('.tb-main-title').getAttribute('data-title');
+            if (json['商品名']) {
+                data.name = json['商品名'];
+            }
+            if (json['独自商品ID']) {
+                data.id = json['独自商品ID'];
+            }
+            //適当に作ったので後で削除
+            data.url = json["リンク"]
+            data.season = ''
+            data.tag = ['ダミー', 'ダミー']
+            data.category = ['ダミー', 'ダミー']
+            data.colorName = ['ダミー', 'ダミー']
+            data.image = ['ダミー', 'ダミー']
             let dom = doc.querySelectorAll('.tb-rmb-num');
             data.price1 = dom[0].innerText;
             data.price2 = dom[1].innerText;
@@ -53,6 +66,6 @@ module.exports = async function TaobaoGetter(url, chromeless) {
             //     }
             // }
             return data;
-        })
+        },json)
     return dataJson;
 }

@@ -21,7 +21,7 @@ async function run() {
 async function getData(itemList, chromeless) {
     for (let index in itemList) {
         if (itemList[index]['リンク'].indexOf('item.taobao.com') != -1) {
-            dataJson[index] = await TaobaoGetter(itemList[index]['リンク'], chromeless)
+            dataJson[index] = await TaobaoGetter(itemList[index], chromeless)
         }
         if (itemList[index]['リンク'].indexOf('detail.tmall.com') != -1) {
             console.log('猫だよ')
