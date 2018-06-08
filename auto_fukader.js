@@ -4,8 +4,6 @@ const {
 } = require('chromeless')
 const axios = require('axios')
 var events = require('events');
-var eventEmitter = new events.EventEmitter();
-eventEmitter.setMaxListeners(0);
 
 const TaobaoGetter = require('./lib/taobao_getter.js')
 const TmallGetter = require('./lib/tmall_getter.js')
