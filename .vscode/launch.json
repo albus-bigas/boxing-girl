@@ -4,7 +4,15 @@
     // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "auto_fukader",
+            "program": "${workspaceFolder}/auto_fukader.js",
+            "args": [
+                "yuto.json"
+            ]
+        },
         {
             "type": "node",
             "request": "launch",
