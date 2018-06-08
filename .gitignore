@@ -40,3 +40,4 @@ fukada.json
 albasimia.json
 dist/*
 regist/*
+!.gitkeep
