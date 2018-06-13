@@ -4,21 +4,24 @@
     // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
             "type": "node",
             "request": "launch",
-            "name": "商品登録",
-            "program": "${workspaceFolder}/buyma_regist.js",
+            "name": "auto_fukader",
+            "program": "${workspaceFolder}/auto_fukader.js",
             "args": [
-                "./test.json"
+                "yuto.json"
             ]
         },
         {
             "type": "node",
             "request": "launch",
-            "name": "taobao情報取得",
-            "program": "${workspaceFolder}/taobao.js"
+            "name": "商品登録",
+            "program": "${workspaceFolder}/buyma_register.js",
+            "args": [
+                "fukada.json",
+                "yuto_dist.json"
+            ]
         }
     ]
 }
