@@ -1,8 +1,7 @@
 const fs = require('fs')
-const {
-    Chromeless
-} = require('chromeless')
+const puppeteer = require('puppeteer')
 const axios = require('axios')
+const im = require('imagemagick');
 
 const TaobaoGetter = require('./lib/taobao_getter.js')
 const TmallGetter = require('./lib/tmall_getter.js')
@@ -15,34 +14,36 @@ const ssUrl = "https://script.google.com/macros/s/AKfycbyk_zhAydAohrcLVlvItjRY_K
 const sheetName = 'dist_data'
 
 
-let chromeless;
+let browser;
+let page;
 const dataJson = {};
-let detailDom;
 
 async function run() {
-    chromeless = new Chromeless({
-        scrollBeforeClick: true,
-        implicitWait: true,
-        waitTimeout:50000
-    })
-    await getData(itemList, chromeless)
+    browser = await puppeteer.launch({
+        headless: false,
+        slowMo: 1, // 遅延時間
+        args: ['--no-sandbox','--use-gl=swiftshader', '--disable-gpu']
+    });
+    page = await browser.newPage()
+    await page.setViewport({width: 1280, height: 1080})
+    await getData(itemList, page)
     await end();
 }
 
-async function getData(itemList, chromeless) {
+async function getData(itemList, page) {
     console.log('start')
     for (let index in itemList) {
         if (itemList[index]['リンク'].indexOf('item.taobao.com') != -1) {
-            [dataJson[index], imagePath] = await TaobaoGetter(itemList[index], chromeless)
+            dataJson[index] = await TaobaoGetter(itemList[index], page)
+            // im.convert([__dirname + '/../img/test.png', '-crop', `${clip.width}x${clip.height}+${clip.left}+${clip.top}`, '../img/output.png'])
         }
         if (itemList[index]['リンク'].indexOf('detail.tmall.com') != -1) {
-            [dataJson[index], imagePath] = await TmallGetter(itemList[index], chromeless)
+            dataJson[index] = await TmallGetter(itemList[index], page)
         }
-        console.log(imagePath)
-        // fs.writeFile('img/image.jpg', createImage(detailDom));
     }
 
-    
+
+
     axios({
         method: 'POST',
         url: ssUrl + `?action=writeData&sheetName=${sheetName}`,
@@ -54,9 +55,10 @@ async function getData(itemList, chromeless) {
 }
 
 async function end() {
-    await chromeless.end()
+    await await browser.close();
     console.log('end')
 }
+
 function createImage(dom) {
     html2canvas(dom, {
         scale: 2,
@@ -66,7 +68,8 @@ function createImage(dom) {
         onrendered: function (canvas) {
             const image = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream');
             return image;
-        }});
+        }
+    });
 };
 
 run().catch(console.error.bind(console))
