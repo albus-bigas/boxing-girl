@@ -8,7 +8,7 @@ const dataJson = require('./' + process.argv[3])
 const comment = require('./comment.json')
 
 const basePath = 'https://www.buyma.com/';
-const imagePath = setting.imagePath;
+const imagePath = __dirname + '/../img/';
 const mail = setting.mail;
 const pass = setting.pass;
 const searchId = setting.searchId;

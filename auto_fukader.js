@@ -22,7 +22,7 @@ async function run() {
     browser = await puppeteer.launch({
         headless: false,
         slowMo: 1, // 遅延時間
-        args: ['--no-sandbox','--use-gl=swiftshader', '--disable-gpu']
+        args: ['--no-sandbox','--use-gl=swiftshader', '--disable-gpu', '--headless']
     });
     page = await browser.newPage()
     await page.setViewport({width: 1280, height: 1080})
