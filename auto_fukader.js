@@ -5,7 +5,7 @@ const im = require('imagemagick');
 
 const TaobaoGetter = require('./lib/taobao_getter.js')
 const TmallGetter = require('./lib/tmall_getter.js')
-const html2canvas = require('html2canvas')
+const ImageSlicer = require('./lib/image_slicer.js')
 
 const itemList = require('./regist/' + process.argv[2])
 const fileName = process.argv[2].replace('.json', '_dist.json')
@@ -35,14 +35,12 @@ async function getData(itemList, page) {
     for (let index in itemList) {
         if (itemList[index]['リンク'].indexOf('item.taobao.com') != -1) {
             dataJson[index] = await TaobaoGetter(itemList[index], page)
-            // im.convert([__dirname + '/../img/test.png', '-crop', `${clip.width}x${clip.height}+${clip.left}+${clip.top}`, '../img/output.png'])
         }
         if (itemList[index]['リンク'].indexOf('detail.tmall.com') != -1) {
             dataJson[index] = await TmallGetter(itemList[index], page)
         }
+        ImageSlicer(itemList[index]['独自商品ID'])
     }
-
-
 
     axios({
         method: 'POST',
