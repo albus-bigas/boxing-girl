@@ -6,12 +6,13 @@ const im = require('imagemagick');
 const TaobaoGetter = require('./lib/taobao_getter.js')
 const TmallGetter = require('./lib/tmall_getter.js')
 const ImageSlicer = require('./lib/image_slicer.js')
+const Setting = require('./setting/fukada.json')
 
 const itemList = require('./regist/' + process.argv[2])
 const fileName = process.argv[2].replace('.json', '_dist.json')
 
-const ssUrl = "https://script.google.com/macros/s/AKfycbyk_zhAydAohrcLVlvItjRY_KtBKPabl3zqpqCa4kHJ_RM9K-wL/exec"
-const sheetName = 'dist_data'
+const ssUrl = Setting.ssUrl
+const sheetName = Setting.sheetName
 
 
 let browser;
@@ -53,7 +54,7 @@ async function getData(itemList, page) {
 }
 
 async function end() {
-    await await browser.close();
+    await browser.close();
     console.log('end')
 }
 
