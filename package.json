@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "canvas": "^1.6.11",
     "chromeless": "1.5.0",
     "html2canvas": "^1.0.0-alpha.12",
     "imagemagick": "^0.1.3",

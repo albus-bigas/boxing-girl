@@ -35,10 +35,11 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
+.vscode
 bower_components
-fukada.json
-albasimia.json
 dist/*
 regist/*
 img/*
+settng/*
 !.gitkeep
+!sample.json
