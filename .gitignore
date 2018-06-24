@@ -40,6 +40,6 @@ bower_components
 dist/*
 regist/*
 img/*
-settng/*
+setting/*
 !.gitkeep
 !sample.json
