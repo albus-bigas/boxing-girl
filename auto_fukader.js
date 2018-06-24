@@ -14,7 +14,6 @@ const fileName = process.argv[2].replace('.json', '_dist.json')
 const ssUrl = Setting.ssUrl
 const sheetName = Setting.sheetName
 
-
 let browser;
 let page;
 const dataJson = {};
@@ -22,7 +21,7 @@ const dataJson = {};
 async function run() {
     browser = await puppeteer.launch({
         headless: false,
-        slowMo: 1, // 遅延時間
+        slowMo: 0, // 遅延時間
         args: ['--no-sandbox','--use-gl=swiftshader', '--disable-gpu', '--headless']
     });
     page = await browser.newPage()
@@ -45,6 +44,7 @@ async function getData(itemList, page) {
 
     axios({
         method: 'POST',
+        port: '443',
         url: ssUrl + `?action=writeData&sheetName=${sheetName}`,
         data: dataJson
     }).then(response => {
