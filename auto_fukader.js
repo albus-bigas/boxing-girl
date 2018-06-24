@@ -27,7 +27,8 @@ async function run() {
     page = await browser.newPage()
     await page.setViewport({width: 1280, height: 1080})
     await getData(itemList, page)
-    await end();
+    await end()
+    postData()
 }
 
 async function getData(itemList, page) {
@@ -41,7 +42,14 @@ async function getData(itemList, page) {
         }
         ImageSlicer(itemList[index]['独自商品ID'])
     }
+}
 
+async function end() {
+    await browser.close();
+    console.log('end')
+}
+
+function postData() {
     axios({
         method: 'POST',
         port: '443',
@@ -52,23 +60,5 @@ async function getData(itemList, page) {
         console.log('\u001b[33m' + response.data.musume + '\u001b[0m')
     });
 }
-
-async function end() {
-    await browser.close();
-    console.log('end')
-}
-
-function createImage(dom) {
-    html2canvas(dom, {
-        scale: 2,
-        dpi: 144,
-        useCORS: true,
-        taintTest: false,
-        onrendered: function (canvas) {
-            const image = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream');
-            return image;
-        }
-    });
-};
 
 run().catch(console.error.bind(console))
