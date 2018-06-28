@@ -5,10 +5,10 @@ const fs = require('fs')
 
 const setting = require('./' + process.argv[2])
 const dataJson = require('./' + process.argv[3])
-const comment = require('./comment.json')
+const comment = require('./data/comment.json')
 
 const basePath = 'https://www.buyma.com/';
-const imagePath = __dirname + '/../img/';
+const imagePath = __dirname + '/img/';
 const mail = setting.mail;
 const pass = setting.pass;
 const searchId = setting.searchId;
@@ -67,7 +67,7 @@ async function input() {
         await setTag(data)
         await setThema()
         await setText(data, data.id)
-        // await submit(data)
+        await submit(data)
         const ranTime = Math.floor(Math.random() * (420000 - 180000) + 180000)
         await chromeless.wait(ranTime)
     }
@@ -271,7 +271,6 @@ async function setThema() {
 }
 
 // MARK: setText() 文字入力->登録
-// TODO: タイトル30文字以内かチェック
 async function setText(data, index) {
     if (debagMode) await console.log('setText')
     await chromeless.evaluate((json, comment) => {
@@ -349,7 +348,6 @@ async function setLocation() {
 }
 
 // MARK: submit() 確定
-// TODO: 出品と下書き分岐
 // NOTE: エラー出たら下書き保存にしてもいいかも。
 async function submit(data) {
     if (debagMode) await console.log('submit')
