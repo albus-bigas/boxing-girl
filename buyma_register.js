@@ -2,6 +2,7 @@ const {
     Chromeless
 } = require('chromeless')
 const fs = require('fs')
+const async = require('async')
 
 const setting = require('./' + process.argv[2])
 const dataJson = require('./' + process.argv[3])
@@ -36,7 +37,8 @@ async function run() {
     await login()
     await input()
     await logout()
-    await end();
+    await end()
+    process.exit()
 }
 
 // MARK: login()
@@ -53,23 +55,46 @@ async function login() {
 async function input() {
     for (let value of dataJson) {
         const data = value;
-        // 出品ページへ
-        await chromeless.goto(basePath + 'my/itemedit/?tab=b')
-            .wait('.js-duty-edit-type')
+        await new Promise(async (resolve) => {
+            async.retry({
+                times: 5,
+                interval: 1000,
+                errorFilter: (err) => {
+                    console.log(data.id, err)
+                    return true
+                }
+            }, async (callbck) => {
+                // 出品ページへ
+                await chromeless.goto(basePath + 'my/itemedit/?tab=b')
+                    .wait('.js-duty-edit-type')
 
-        await setData(data)
-        await searchHistoricalData()
-        await setCategoly(data)
-        await setBrand()
-        await setImage(data)
-        // await setColor(data)
-        // await setSize(data)
-        await setTag(data)
-        await setThema()
-        await setText(data, data.id)
-        await submit(data)
-        const ranTime = Math.floor(Math.random() * (420000 - 180000) + 180000)
-        await chromeless.wait(ranTime)
+                await setData(data)
+                await searchHistoricalData()
+                await setCategoly(data)
+                await setBrand()
+                await setImage(data)
+                // await setColor(data)
+                // await setSize(data)
+                await setTag(data)
+                await setThema()
+                await setText(data)
+                await submit(data)
+                const ranTime = Math.floor(Math.random() * (420000 - 180000) + 180000)
+                await chromeless.wait(ranTime)
+
+                return data.id + ' success';
+            }, async function (err, result) {
+                if (err) {
+                    console.error(data.id + ' failed', )
+                    console.error(err)
+                    resolve();
+                }
+                if (result) {
+                    console.log(result[0])
+                    resolve(result[1]);
+                }
+            })
+        })
     }
 }
 
@@ -271,7 +296,7 @@ async function setThema() {
 }
 
 // MARK: setText() 文字入力->登録
-async function setText(data, index) {
+async function setText(data) {
     if (debagMode) await console.log('setText')
     await chromeless.evaluate((json, comment) => {
         let ele = document.querySelector('#item_name');
@@ -364,7 +389,7 @@ async function submit(data) {
 
 async function logout() {
     await chromeless.goto(basePath + 'logout/')
-        .evaluate(() => { })
+        .evaluate(() => {})
     await console.log('logout')
 }
 
