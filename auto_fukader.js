@@ -19,14 +19,17 @@ let browser;
 const dataJson = {};
 
 async function run() {
-    browser = await puppeteer.launch({
-        headless: true,
-        // executablePath: '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
-        slowMo: 0, // 遅延時間
-        args: ['--no-sandbox', '--use-gl=swiftshader', '--disable-gpu']
-    });
+    browser = await puppeteer.connect({
+        browserWSEndpoint: 'ws://127.0.0.1:9222/devtools/browser/b499760e-012f-4872-9d9a-386965cb3269'
+    })
+    // browser = await puppeteer.launch({
+    //     headless: true,
+    //     // executablePath: '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
+    //     slowMo: 0, // 遅延時間
+    //     args: ['--no-sandbox', '--use-gl=swiftshader', '--disable-gpu']
+    // });
     await getData(itemList, browser)
-    await end(browser)
+    // await end(browser)
     await postData()
     for (let index in itemList) {
         await ImageSlicer(itemList[index]['独自商品ID'])
