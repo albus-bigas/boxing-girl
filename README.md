@@ -1,7 +1,7 @@
 ## リンク
-### <a href="https://docs.google.com/spreadsheets/d/1uE7yr18OTk6Q-_KJxOmOyNZvOxOhiaeHjxQiyaVHVW8/edit#gid=647604198" target="_blank">BUYMA出品資料</a>
+### [BUYMA出品資料](https://docs.google.com/spreadsheets/d/1uE7yr18OTk6Q-_KJxOmOyNZvOxOhiaeHjxQiyaVHVW8/edit#gid=647604198)
 
-### <a href="https://docs.google.com/spreadsheets/d/1t7pld9RjYMovWK-cy5avRr9WsJiMMTiMMP7Xr2U7wKE/edit#gid=1666959935" target="_blank">箱入れ娘</a>
+### [箱入れ娘](https://docs.google.com/spreadsheets/d/1t7pld9RjYMovWK-cy5avRr9WsJiMMTiMMP7Xr2U7wKE/edit#gid=1666959935)
 
 
 ## 準備
@@ -48,4 +48,4 @@ node auto_fukader.js xxxx.json
 node buyma_register.js setting/fukada.json dist/xxxx_dist.json
 ```
 
-5. 登録された商品からカラー、サイズ、タグを入力
+5. 登録された商品からカラー、サイズ、タグを入力
