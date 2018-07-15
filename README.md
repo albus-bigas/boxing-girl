@@ -1,7 +1,7 @@
 ## リンク
-### [BUYMA出品資料](https://docs.google.com/spreadsheets/d/1uE7yr18OTk6Q-_KJxOmOyNZvOxOhiaeHjxQiyaVHVW8/edit#gid=647604198)
+### <a href="https://docs.google.com/spreadsheets/d/1uE7yr18OTk6Q-_KJxOmOyNZvOxOhiaeHjxQiyaVHVW8/edit#gid=647604198" target="_blank">BUYMA出品資料</a>
 
-### [箱入れ娘](https://docs.google.com/spreadsheets/d/1t7pld9RjYMovWK-cy5avRr9WsJiMMTiMMP7Xr2U7wKE/edit#gid=1666959935)
+### <a href="https://docs.google.com/spreadsheets/d/1t7pld9RjYMovWK-cy5avRr9WsJiMMTiMMP7Xr2U7wKE/edit#gid=1666959935" target="_blank">箱入れ娘</a>
 
 
 ## 準備
@@ -31,7 +31,7 @@ Windows
 ```
 
 4. auto_fukader.jsのbrowserWSEndpointにURLを貼り付け
-    - winは[localhost:9222/json/version](localhost:9222/json/version)にアクセスしてコピー
+    - winは[localhost:9222/json/version](localhost:9222/json/version)にアクセスしてコピー
 3. auto_fukader.jsを実行
 
 ```
@@ -40,8 +40,8 @@ node auto_fukader.js xxxx.json
 
 ### 登録
 1. 箱入れ娘、dist_dataシートのデータを修正
-2. 画像をチェック、編集
-3. dist_dataシートをExport Sheet DataでJSON出力し、distディレクトリのファイルに貼り付け
+2. 画像をチェック、編集
+3. dist_dataシートをExport Sheet DataでJSON出力し、distディレクトリのファイルに貼り付け
 4. buyma_register.jsを実行
 
 ```
