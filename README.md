@@ -45,7 +45,7 @@ node auto_fukader.js xxxx.json
 ### 登録
 1. 箱入れ娘、dist_dataシートのデータを修正
 2. 画像をチェック、編集
-3. dist_dataシートをExport Sheet DataでJSON出力し、distディレクトリのファイルに貼り付け
+3. dist_dataシートをExport Sheet DataでJSON出力し、distディレクトリのファイルに貼り付け
 4. buyma_register.jsを実行
 
 ```
