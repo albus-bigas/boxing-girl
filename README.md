@@ -30,13 +30,17 @@ Windows
 わからんけどこのオプションをつけてください --remote-debugging-port=9222 --disable-gpu
 ```
 
-4. auto_fukader.jsのbrowserWSEndpointにURLを貼り付け
+4. taobaoにログイン
+
+5. auto_fukader.jsのbrowserWSEndpointにURLを貼り付け
     - winは[localhost:9222/json/version](localhost:9222/json/version)にアクセスしてコピー
-3. auto_fukader.jsを実行
+6. auto_fukader.jsを実行
 
 ```
 node auto_fukader.js xxxx.json
 ```
+
+32行目`await end(browser)`のコメントアウトを外すと終了後にブラウザを閉じてしまうのでコメントアウトしたまま使うのがオススメ。
 
 ### 登録
 1. 箱入れ娘、dist_dataシートのデータを修正
