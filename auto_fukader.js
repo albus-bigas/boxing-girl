@@ -20,7 +20,7 @@ const dataJson = {};
 
 async function run() {
     browser = await puppeteer.connect({
-        browserWSEndpoint: 'ws://127.0.0.1:9222/devtools/browser/b499760e-012f-4872-9d9a-386965cb3269'
+        browserWSEndpoint: 'ws://127.0.0.1:9222/devtools/browser/52079509-927e-467f-a0ab-783f3a832b85'
     })
     // browser = await puppeteer.launch({
     //     headless: true,
@@ -30,7 +30,7 @@ async function run() {
     // });
     await getData(itemList, browser)
     // await end(browser)
-    await postData()
+    // await postData()
     for (let index in itemList) {
         await ImageSlicer(itemList[index]['独自商品ID'])
         await console.log('end', itemList[index]['独自商品ID'])
