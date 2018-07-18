@@ -30,10 +30,21 @@ Windows
 /c/Users/yuto/AppData/Local/Google//Chrome\ SxS/Application/chrome.exe --remote-debugging-port=9222 --disable-gpu
 ```
 
-4. taobaoにログイン
+4. taobaoとTmallにログイン
 
+taobao
+```
+https://www.taobao.com/
+```
+Tmall
+```
+https://www.tmall.com/
+```
 5. auto_fukader.jsのbrowserWSEndpointにURLを貼り付け
-    - winは[localhost:9222/json/version](localhost:9222/json/version)にアクセスしてコピー
+    - winは下記アドレスににアクセスしてコピー
+```
+localhost:9222/json/version
+```
 6. auto_fukader.jsを実行
 
 ```
