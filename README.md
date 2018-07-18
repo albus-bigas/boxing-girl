@@ -30,7 +30,7 @@ Windows
 /c/Users/yuto/AppData/Local/Google//Chrome\ SxS/Application/chrome.exe --remote-debugging-port=9222 --disable-gpu
 ```
 
-4. taobaoとTmallにログイン
+4. taobaoとTmallにログイン
 
 taobao
 ```
