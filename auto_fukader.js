@@ -19,16 +19,16 @@ let browser;
 const dataJson = {};
 
 async function run() {
-    browser = await puppeteer.connect({
-        browserWSEndpoint: 'ws://127.0.0.1:9222/devtools/browser/52079509-927e-467f-a0ab-783f3a832b85'
-    })
+    // browser = await puppeteer.connect({
+    //     browserWSEndpoint: 'ws://127.0.0.1:9222/devtools/browser/52079509-927e-467f-a0ab-783f3a832b85'
+    // })
     // browser = await puppeteer.launch({
     //     headless: true,
     //     // executablePath: '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
     //     slowMo: 0, // 遅延時間
     //     args: ['--no-sandbox', '--use-gl=swiftshader', '--disable-gpu']
     // });
-    await getData(itemList, browser)
+    // await getData(itemList, browser)
     // await end(browser)
     // await postData()
     for (let index in itemList) {
@@ -40,41 +40,6 @@ async function run() {
 
 async function getData(itemList, browser) {
     console.log('start')
-    //ぶち殺すやつ書き途中
-    // const loginPage = await browser.newPage()
-    // await loginPage.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36")
-    // await loginPage.setViewport({
-    //     width: 1280,
-    //     height: 1080
-    // })
-    // await loginPage.goto('https://www.taobao.com/', {
-    //     waitUntil: 'networkidle2',
-    //     timeout: 3000
-    // }).catch(() => {})
-    // const frames = await loginPage.frames()
-    // for (let i = 0; i < frames.length; i++)console.log(frames[i].name())
-    // const frame = await loginPage.frames().find(f => f.name() === 'login-iframe')
-    // await frame.type('#TPL_username_1', 'albus1997')
-    // await frame.type('#TPL_password_1', '1991Albust')
-    // await loginPage.waitFor(500000)
-    // await frame.click('#J_SubmitStatic')
-    // await frame.type('#TPL_password_1', '1991Albust')
-    // const dragArea = await frame.$('#nc_1_n1z')
-    //     const {
-    //         width,
-    //         height,
-    //         left: x,
-    //         top: y
-    //     } = dragDom.getBoundingClientRect()
-    //     return {
-    //         width: width,
-    //         height: height,
-    //         x: x,
-    //         y: y
-    //     };
-    // })
-    // await frame.click('#J_SubmitStatic')
-
     for (let index in itemList) {
         const page = await browser.newPage()
         page._networkManager.setMaxListeners(100);

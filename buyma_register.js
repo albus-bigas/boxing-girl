@@ -7,6 +7,7 @@ const async = require('async')
 const setting = require('./' + process.argv[2])
 const dataJson = require('./' + process.argv[3])
 const comment = require('./data/comment.json')
+const size_description = require('./data/size_description.json')
 
 const basePath = 'https://www.buyma.com/';
 const imagePath = __dirname + '/img/';
@@ -22,8 +23,6 @@ const lastDay = new Date(year, month, 0).getDate();
 const debagMode = true;
 
 //TODO: setSize()とsetColorの依存を解消←依存している関数は全部バラす
-//TODO: ユニセックス対応
-//TODO: 靴、アクセサリー等対応
 //TODO: エラー処理(idとエラー箇所通知)
 //TODO: slack通知
 
@@ -42,134 +41,155 @@ async function run() {
 }
 
 // MARK: login()
-async function login() {
-    if (debagMode) await console.log('login')
-    await chromeless
-        .goto(basePath + 'login/')
-        .type(mail, '#txtLoginId')
-        .type(pass, '#txtLoginPass')
-        .click('#login_do')
-        .wait(5000)
+const login = () => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('login')
+        await chromeless
+            .goto(basePath + 'login/')
+            .wait('#txtLoginId')
+            .type(mail, '#txtLoginId')
+            .type(pass, '#txtLoginPass')
+            .click('#login_do')
+        resolve()
+    })
 }
 // MARK: input()
-async function input() {
-    for (let value of dataJson) {
-        const data = value;
-        await new Promise(async (resolve) => {
-            async.retry({
-                times: 5,
-                interval: 1000,
-                errorFilter: (err) => {
-                    console.log(data.id, err)
-                    return true
-                }
-            }, async (callbck) => {
-                // 出品ページへ
-                await chromeless.goto(basePath + 'my/itemedit/?tab=b')
-                    .wait('.js-duty-edit-type')
+const input = () => {
+    return new Promise(async (resolve) => {
+        for (let value of dataJson) {
+            const data = value;
+            await new Promise(async (resolve) => {
+                async.retry({
+                    times: 5,
+                    interval: 1000,
+                    errorFilter: (err) => {
+                        console.log(data.id, err)
+                        return true
+                    }
+                }, async (callbck) => {
+                    // 出品ページへ
+                    await chromeless.goto(basePath + 'my/itemedit/?tab=b')
+                        .wait('.js-duty-edit-type')
 
-                await setData(data)
-                await searchHistoricalData()
-                await setCategoly(data)
-                await setBrand()
-                await setImage(data)
-                // await setColor(data)
-                // await setSize(data)
-                await setTag(data)
-                await setThema()
-                await setText(data)
-                await submit(data)
-                const ranTime = Math.floor(Math.random() * (420000 - 180000) + 180000)
-                await chromeless.wait(ranTime)
-
-                return data.id + ' success';
-            }, async function (err, result) {
-                if (err) {
-                    console.error(data.id + ' failed', )
-                    console.error(err)
-                    resolve();
-                }
-                if (result) {
-                    console.log(result[0])
-                    resolve(result[1]);
-                }
+                    await setData(data)
+                    await searchHistoricalData()
+                    await setCategoly(data)
+                    await setBrand()
+                    await setImage(data)
+                    // await setColor(data)
+                    // await setSize(data)
+                    await setTag(data)
+                    await setThema()
+                    await setText(data)
+                    await submit(data)
+                    return 'regist ' + data.id + ' success';
+                }, async function (err, result) {
+                    if (err) {
+                        console.error(data.id + ' failed', )
+                        console.error(err)
+                        resolve();
+                    }
+                    if (result) {
+                        console.log(result)
+                        const ranTime = Math.floor(Math.random() * (300000 - 180000) + 180000)
+                        await chromeless.wait(ranTime).evaluate(() => {})
+                        resolve(result);
+                    }
+                })
             })
-        })
-    }
+        }
+        resolve()
+    })
 }
-
 // MARK: setData() 日付取得、フォルダから画像のパスを取得
 function setData(data) {
-    if (debagMode) console.log('setData')
-    data.category = data.category.split(',');
-    data.keyword = data.keyword.split(',');
-    data.limit = year + '/' + month + '/' + lastDay;
-    data.image = fs.readdirSync(imagePath + data.id)
-    for (let i = 0; i < data.image.length; i++) {
-        if (data.image[i] == '.DS_Store') data.image.splice(i, 1);
-    }
-    for (let i = 0; i < data.image.length; i++) {
-        data.image[i] = imagePath + data.id + '/' + data.image[i];
-    }
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('setData')
+        data.category = data.category.split(',');
+        data.keyword = data.keyword.split(',');
+        data.tag = data.tag.split(',');
+        data.limit = year + '/' + month + '/' + lastDay;
+        data.image = fs.readdirSync(imagePath + data.id)
+        for (let i = 0; i < data.image.length; i++) {
+            if (data.image[i] == '.DS_Store') data.image.splice(i, 1);
+        }
+        for (let i = 0; i < data.image.length; i++) {
+            data.image[i] = imagePath + data.id + '/' + data.image[i];
+        }
+        resolve()
+    })
 }
 
 // MARK: 過去の出品を検索してコピー
-async function searchHistoricalData() {
-    if (debagMode) await console.log('searchHistoricalData')
-    await chromeless
-        .click('.itemedit-copy-btn')
-        .wait('#formmain_select')
-        .type(searchId, '#conditional_text')
-        .click('#conditional_submit')
-        .wait(`input[onclick="$('#rdoitems').val('36281020')"]`)
-        .click(`input[onclick="$('#rdoitems').val('36281020')"]`)
-        .evaluate(() => {})
+const searchHistoricalData = () => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('searchHistoricalData')
+        await chromeless
+            .click('.itemedit-copy-btn')
+            .wait('#formmain_select')
+            .type(searchId, '#conditional_text')
+            .click('#conditional_submit')
+            .wait(`input[onclick="$('#rdoitems').val('37212012')"]`)
+            .click(`input[onclick="$('#rdoitems').val('37212012')"]`)
+            .wait('.popup_category')
+            .evaluate(() => {})
+        resolve()
+    })
 }
 
 // MARK: setCategoly() カテゴリ選択
-async function setCategoly(data) {
-    await console.log('setCategoly')
-    await chromeless
-        .wait('.js-duty-edit-type')
-        .click('.popup_category')
-        .wait('.cate_link')
-        .evaluate((json) => {
-            const cateRow = document.querySelectorAll('.cat_list')
-            const cateLink = cateRow[1].querySelectorAll('.cate_link')
-            for (let i = 0; i < cateLink.length; i++) {
-                if (cateLink[i].innerText == json.category[0]) {
-                    cateLink[i].click();
+const setCategoly = (data) => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('setCategoly')
+        await chromeless
+            .wait('.js-duty-edit-type')
+            .click('.popup_category')
+            .wait('.cate_link')
+            .evaluate((json) => {
+                const cateRow = document.querySelectorAll('.cat_list')
+                const cateLink = cateRow[1].querySelectorAll('.cate_link')
+                for (let i = 0; i < cateLink.length; i++) {
+                    if (cateLink[i].innerText == json.category[0]) {
+                        cateLink[i].click();
+                    }
                 }
-            }
-        }, data)
-    await chromeless
-        .wait('.cate_list')
-        .evaluate((json) => {
-            const cateList = document.querySelectorAll('a')
-            for (let i = 0; i < cateList.length; i++) {
-                if (cateList[i].innerText == json.category[1]) {
-                    cateList[i].click()
+            }, data)
+        await chromeless
+            .wait('.cate_list')
+            .evaluate((json) => {
+                const cateList = document.querySelectorAll('a')
+                for (let i = 0; i < cateList.length; i++) {
+                    if (cateList[i].innerText == json.category[1]) {
+                        cateList[i].click()
+                    }
                 }
-            }
-        }, data)
+            }, data)
+        resolve()
+    })
 }
 
 // MARK: setBrand() ブランド選択
 // TODO: ブランドがある場合ブランド選択
-async function setBrand() {
-    if (debagMode) await console.log('setBrand')
-    await chromeless
-        .click('.popup_brand')
-        .wait('#brand_popup_tab')
-        .click('.select_box.fab-button.fab-button--back')
+const setBrand = () => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('setBrand')
+        await chromeless
+            .click('.popup_brand')
+            .wait('#brand_popup_tab')
+            .click('.select_box.fab-button.fab-button--back')
+        resolve()
+    })
 }
 
 // MARK: setImage() 画像選択
-async function setImage(data) {
-    if (debagMode) await console.log('setImage')
-    await chromeless
-        .setFileInput('input[type=file]', data.image)
-        .wait(10000)
+const setImage = (data) => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('setImage')
+        await chromeless
+            .setFileInput('input[type=file]', data.image)
+            .wait(10000)
+        resolve()
+    })
 }
 
 // MARK: setColor() カラー選択
@@ -259,84 +279,94 @@ async function setSize(data) {
 
 // MARK: setTag() タグ選択
 // TODO: 有名人、雑誌ランダム選択
-async function setTag(data) {
-    if (debagMode) await console.log('setTag')
-    if (data.tag) {
-        await chromeless.evaluate(() => {
-            const btn = document.querySelector('.itemedit-tag__btn')
-            btn.click()
-        })
-        await chromeless.wait('.r_tag_select_box_content')
-            .evaluate((tag) => {
-                const doms = document.querySelectorAll('.m_tag_title');
-                for (var i = 0; i < doms.length; i++) {
-                    for (var n = 0; n < tag.length; n++) {
-                        if (doms[i].innerText == tag[n]) {
-                            doms[i].parentElement.parentElement.click();
+const setTag = (data) => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('setTag')
+        if (data.tag) {
+            await chromeless.evaluate(() => {
+                const btn = document.querySelector('.itemedit-tag__btn')
+                btn.click()
+            })
+            await chromeless.wait('.r_tag_select_box_content')
+                .evaluate((tag) => {
+                    const doms = document.querySelectorAll('.m_tag_title');
+                    for (var i = 0; i < doms.length; i++) {
+                        for (var n = 0; n < tag.length; n++) {
+                            if (doms[i].innerText == tag[n]) {
+                                doms[i].parentElement.parentElement.click();
+                            }
                         }
                     }
-                }
-                const content = document.querySelector('.r_tag_select_box_content');
-                setTimeout(() => {
-                    content.querySelector('button').click();
-                }, 300)
-            }, data.tag)
-    }
+                    const content = document.querySelector('.r_tag_select_box_content');
+                    setTimeout(() => {
+                        content.querySelector('button').click();
+                    }, 300)
+                }, data.tag)
+            await chromeless.wait(3000)
+            resolve();
+        }
+    })
 }
 
 // MARK: setThema() テーマ選択
-async function setThema() {
-    if (debagMode) await console.log('setThema')
-    await chromeless.click('.popup_thema')
-        .wait('.thema_list')
-        .evaluate(() => {
-            const ele = document.querySelector('tr[value="1"]');
-            ele.click();
-        })
+const setThema = () => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('setThema')
+        await chromeless.click('.popup_thema')
+            .wait('.thema_list')
+            .evaluate(() => {
+                const ele = document.querySelector('tr[value="1"]');
+                ele.click();
+            })
+        resolve()
+    })
 }
 
 // MARK: setText() 文字入力->登録
-async function setText(data) {
-    if (debagMode) await console.log('setText')
-    await chromeless.evaluate((json, comment) => {
-        let ele = document.querySelector('#item_name');
-        let title = json.name;
-        if (json.keyword) {
-            for (var i = 0; i < json.keyword.length; i++) {
-                comment = comment + " " + json.keyword[i];
+const setText = (data) => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('setText')
+        await chromeless.evaluate((json, comment, size_description) => {
+            let ele = document.querySelector('#item_name');
+            let title = json.name;
+            if (json.keyword) {
+                for (var i = 0; i < json.keyword.length; i++) {
+                    comment = comment + " " + json.keyword[i];
+                }
             }
-        }
-        title = title + " " + json.id;
-        ele.value = title;
-        ele = document.querySelector('#price');
-        ele.value = json.ex_price;
-        ele = document.querySelector('.js-reference-price-reference');
-        ele.click();
-        ele = document.querySelector('#reference_price');
-        ele.value = json.re_price;
-        ele = document.querySelector('#pieces');
-        ele.value = 2;
-        ele = document.querySelector('#item_color_size');
-        // ele.value = json.size_description;
-        ele = document.querySelector('#item_comment');
-        ele.value = comment;
+            title = title + " " + json.id;
+            ele.value = title;
+            ele = document.querySelector('#price');
+            ele.value = json.ex_price;
+            ele = document.querySelector('.js-reference-price-reference');
+            ele.click();
+            ele = document.querySelector('#reference_price');
+            ele.value = json.re_price;
+            ele = document.querySelector('#pieces');
+            ele.value = 2;
+            ele = document.querySelector('#item_color_size');
+            ele.value = size_description.size + size_description.model + size_description.color + size_description.material + json.material;
+            ele = document.querySelector('#item_comment');
+            ele.value = comment;
 
-        // MARK: 関税込み選択
-        ele = document.querySelector('#itemedit_duty_flg');
-        ele.click();
+            // MARK: 関税込み選択
+            ele = document.querySelector('#itemedit_duty_flg');
+            ele.click();
 
-        // MARK: 購入期限
-        ele = document.querySelector('#itemedit_yukodate');
-        ele.value = json.limit;
+            // MARK: 購入期限
+            ele = document.querySelector('#itemedit_yukodate');
+            ele.value = json.limit;
 
-        // MARK: シーズン
-        ele = document.querySelector('#season')
-        if (json.season.indexOf('春') != -1 || json.season.indexOf('夏') != -1) {
-            ele.value = '27'
-        } else if (json.season.indexOf('秋') != -1 || json.season.indexOf('冬') != -1) {
-            ele.value = '28'
-        }
-    }, data, comment.comment)
+            // MARK: シーズン
+            ele = document.querySelector('#season')
+            if (json.season.indexOf('春') != -1 || json.season.indexOf('夏') != -1) {
+                ele.value = '27'
+            } else if (json.season.indexOf('秋') != -1 || json.season.indexOf('冬') != -1) {
+                ele.value = '28'
+            }
+        }, data, comment.comment, size_description)
+        resolve()
+    })
 }
 
 // TODO: setShipping() 配送方法 保留
@@ -374,23 +404,29 @@ async function setLocation() {
 
 // MARK: submit() 確定
 // NOTE: エラー出たら下書き保存にしてもいいかも。
-async function submit(data) {
-    if (debagMode) await console.log('submit')
-    await (async function () {
-        if (data.draft) {
-            await chromeless.evaluate(() => {
-                ele = document.querySelector('#draftButton');
-                ele.click();
-            })
-            await chromeless.wait('.fab-design-mg--tb20')
-        }
-    })()
+const submit = (data) => {
+    return new Promise(async (resolve) => {
+        if (debagMode) console.log('submit')
+        await (async function () {
+            if (data.draft) {
+                await chromeless.evaluate(() => {
+                    ele = document.querySelector('#draftButton');
+                    ele.click();
+                })
+                await chromeless.wait('.fab-design-mg--tb20')
+            }
+        })()
+        resolve()
+    })
 }
 
-async function logout() {
-    await chromeless.goto(basePath + 'logout/')
-        .evaluate(() => {})
-    await console.log('logout')
+const logout = () => {
+    return new Promise(async (resolve) => {
+        await chromeless.goto(basePath + 'logout/')
+            .evaluate(() => {})
+        await console.log('logout')
+        resolve()
+    })
 }
 
 // MARK: end() 終了
